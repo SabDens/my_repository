@@ -1,77 +1,32 @@
 #pragma once
-#include "../My String end array/My_String.h"
 #include "Weapon.h"
+#include "IPrint.h"
+#include "Position.h"
 
-class Unit : public Weapon
+class Unit : public IPrint
 {
 protected:
-	int HP;
-	//Weapon weapon;
-	int	speed;
-	My_String name;
-	bool IslnDefense;
+	int range;
+	char* name;
+	int hp;
+	Weapon* weapon;
+	Position position;
 public:
-	Unit(const char* name_, int hp);
-	Unit(int hp);
-	Unit(const char* name_);
-	~Unit();
-	virtual void TakeDamage(int value);
-	virtual void Atack(Unit& enemy);
-	virtual void Defense();
-	void Print() const;
-};
+	Unit(const char* name, int hp, Weapon* weapon, const Position& pos);
 
-class Swordman : public Unit
-{
-private:
-	unsigned int power;
+	virtual ~Unit() = 0;
 
-public:
-	Swordman()
-		:Unit("Den" , 1200)
-	{
-		damage += 20;
-	}
-	~Swordman();
-	void Atack(Unit& enemy)override;
-	void Defense()override;
-	void TakeDamage(int value)override;
+	void Damaged(int value);
 
+	int GetHP() const;
 
-};
+	const char* GetName() const;
 
-class Archer : public Unit
-{
-private:
-	unsigned int arrows;
+	void SetPosition(Position& position);
 
-public:
-	Archer()
-		:Unit("Den", 1000)
-	{
-	}
-	~Archer();
-	void Atack(Unit& unit)override;
-	void Defense()override;
-	void TakeDamage(int value)override;
+	const Position& GetPosition() const;
 
-};
+	virtual void Attack(Unit& enemy);
 
-
-class Mage : public Unit
-{
-private:
-	unsigned int mana;
-
-public:
-	Mage()
-		:Unit("Den", 1000)
-	{
-		damage += 30;
-	}
-	~Mage();
-	void Atack(Unit& unit)override;
-	void Defense()override;
-	void TakeDamage(int value)override;
-
+	virtual void print() const override = 0;
 };

@@ -1,0 +1,53 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\denbo\\source\\repos\\my repository\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7625FB4F-E200-4ADC-B85C-2132A811D0BE}|Abstract_classes\\Abstract_classes.vcxproj|C:\\Users\\denbo\\source\\repos\\my repository\\Abstract_classes\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{7625FB4F-E200-4ADC-B85C-2132A811D0BE}|Abstract_classes\\Abstract_classes.vcxproj|solutionrelative:Abstract_classes\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69BE54C9-F5D7-491E-9B72-841C1436C881}|My String end array\\My String end array.vcxproj|C:\\Users\\denbo\\source\\repos\\my repository\\My String end array\\My_String.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{69BE54C9-F5D7-491E-9B72-841C1436C881}|My String end array\\My String end array.vcxproj|solutionrelative:My String end array\\My_String.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 169,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "My_String.h",
+              "DocumentMoniker": "C:\\Users\\denbo\\source\\repos\\my repository\\My String end array\\My_String.h",
+              "RelativeDocumentMoniker": "My String end array\\My_String.h",
+              "ToolTip": "C:\\Users\\denbo\\source\\repos\\my repository\\My String end array\\My_String.h",
+              "RelativeToolTip": "My String end array\\My_String.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-01-29T20:48:15.874Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.cpp",
+              "DocumentMoniker": "C:\\Users\\denbo\\source\\repos\\my repository\\Abstract_classes\\main.cpp",
+              "RelativeDocumentMoniker": "Abstract_classes\\main.cpp",
+              "ToolTip": "C:\\Users\\denbo\\source\\repos\\my repository\\Abstract_classes\\main.cpp",
+              "RelativeToolTip": "Abstract_classes\\main.cpp",
+              "ViewState": "AgIAALEAAAAAAAAAAADwv8UAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-01-28T19:35:20.172Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
