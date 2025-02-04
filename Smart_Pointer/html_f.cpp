@@ -1,27 +1,28 @@
 #include <iostream>
-#include <fstream>
 #include <string>
+#include <fstream>
 #include <memory>
 
-bool validateHTML(const std::unique_ptr<std::string>& filename) {
-    std::ifstream file(*filename);
+bool HTML_V(const std::unique_ptr<std::string>& file_n) {
+    char simbol;
+    int open = 0;
+    int closed = 0;
+    
+    std::ifstream file(*file_n);
     if (!file) {
-        std::cout << "cant open";
+        std::cout << "Error";
         return false;
     }
 
-    char ch;
-    int op = 0;
-    int cl = 0;
-
-    while (file.get(ch)) {
-        if (ch == '>')
-            cl++;
-        else if (ch == '<')
-            op++;
+ 
+    while (file.get(simbol)) {
+        if (simbol == '>')
+            closed++;
+        else if (simbol == '<')
+            open++;
     }
 
-    if (op == cl)
+    if (open == closed)
         return true;
     else
         return false;
@@ -29,15 +30,15 @@ bool validateHTML(const std::unique_ptr<std::string>& filename) {
 
 int main() {
     std::string filename;
-    std::cout << "input way: ";
     std::cin >> filename;
-    auto fn = std::make_unique<std::string>(filename);
 
-    if (validateHTML(fn)) {
-        std::cout << "valid" << std::endl;
+    auto file = std::make_unique<std::string>(filename);
+
+    if (HTML_V(file)) {
+        std::cout << "Valid" << "\n";
     }
     else {
-        std::cout << "invalid" << std::endl;
+        std::cout << "Invalid" << "\n";
     }
 
     return 0;
