@@ -118,12 +118,7 @@ public:
     }
 };
 
-template <class T>
-class SharedPtr {
-private:
-	T* S_ptr;
-	size_t*	Count;
-};
+
 int main() {
 	UniquePtr<int> obj = new int(15);
 	UniquePtr<int> obj1 = new int(25);

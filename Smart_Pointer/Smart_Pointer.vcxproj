@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="html_f.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="main_para.cpp" />
     <ClCompile Include="main_v.cpp" />
