@@ -10,10 +10,9 @@ bool HTML_V(const std::unique_ptr<std::string>& file_n) {
     
     std::ifstream file(*file_n);
     if (!file) {
-        std::cout << "Error";
+        std::cout << "Error: ";
         return false;
     }
-
  
     while (file.get(simbol)) {
         if (simbol == '>')
@@ -22,24 +21,25 @@ bool HTML_V(const std::unique_ptr<std::string>& file_n) {
             open++;
     }
 
-    if (open == closed)
+    if (open == closed) {
         return true;
-    else
+    }
+    else {
         return false;
+    }
+        
 }
 
 int main() {
     std::string filename;
     std::cin >> filename;
-
     auto file = std::make_unique<std::string>(filename);
 
     if (HTML_V(file)) {
-        std::cout << "Valid" << "\n";
+        std::cout << "valid" << std::endl;
     }
     else {
-        std::cout << "Invalid" << "\n";
+        std::cout << "invalid" << std::endl;
     }
-
     return 0;
 }
