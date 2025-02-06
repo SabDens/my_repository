@@ -3,43 +3,57 @@
 #include <fstream>
 #include <memory>
 
-bool HTML_V(const std::unique_ptr<std::string>& file_n) {
-    char simbol;
-    int open = 0;
-    int closed = 0;
-    
-    std::ifstream file(*file_n);
-    if (!file) {
-        std::cout << "Error: ";
-        return false;
-    }
- 
-    while (file.get(simbol)) {
-        if (simbol == '>')
-            closed++;
-        else if (simbol == '<')
-            open++;
+//Я сделал это до этого сам, но ладно, теперь я думаю что точно не похоже
+class HTML_V {
+private:
+    std::unique_ptr<std::string> fileName;
+public:
+    HTML_V(const std::string& filename) {
+        fileName = std::make_unique<std::string>(filename);
     }
 
-    if (open == closed) {
-        return true;
+    bool Validate() {
+        char symbol;
+        int open = 0;
+        int close = 0;
+
+        std::ifstream file(*fileName);
+        if (!file) {
+            std::cout << "Error\n";
+            return false;
+        }
+
+        while (file.get(symbol)) {
+            if (symbol == '<') {
+                open++;
+            }
+            else if (symbol == '>') {
+                close++;
+            }
+        }
+
+        return (open == close);
     }
-    else {
-        return false;
-    }
+
+    void Show() {
         
-}
+        if (Validate()) {
+            std::cout << "Valid" << std::endl;
+        }
+        else {
+            std::cout << "Invalid" << std::endl;
+        }
+    }
+
+};
+
+
 
 int main() {
     std::string filename;
     std::cin >> filename;
-    auto file = std::make_unique<std::string>(filename);
 
-    if (HTML_V(file)) {
-        std::cout << "valid" << std::endl;
-    }
-    else {
-        std::cout << "invalid" << std::endl;
-    }
+    HTML_V validator(filename);
+    validator.Show();
     return 0;
 }
