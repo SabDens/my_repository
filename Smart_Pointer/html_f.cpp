@@ -3,7 +3,6 @@
 #include <fstream>
 #include <memory>
 
-//Я сделал это до этого сам, но ладно, теперь я думаю что точно не похоже
 class HTML_V {
 private:
     std::unique_ptr<std::string> fileName;
