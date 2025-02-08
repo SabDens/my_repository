@@ -1,17 +1,38 @@
 #include <iostream>
-//#include "Array.h"
+#include "Array.h"
 //#include "Fifo.h"
 //#include "Lifo.h"
-//#include "My_String.h"
+#include "My_String.h"
 //#include "list.h"
 //#include "Stack.h"
-#include "doubly_list.h"
-#include "Queue.h"
+//#include "doubly_list.h"
+//#include "Queue.h"
 
 
 int main() { 
+
 	srand(time(0));
-	Doubly_List<int> dList;
+	//1 è 2
+
+
+
+	My_String string("Denys");
+	My_String string1;
+	string.Print();
+
+	string1 = string;
+	string1.Print();
+
+
+	Array<int> obj_arr(10);
+	obj_arr.RandArray();
+	obj_arr.Print();
+	Array<int>obj_arr2;
+
+	obj_arr2 = obj_arr;
+	obj_arr2.Print();
+
+	/*Doubly_List<int> dList;
 	dList.AddToHead(73);
 	dList.AddToTail(14);
 	dList.AddToTail(17);
@@ -33,7 +54,7 @@ int main() {
 	Node<int>* zvezda = dList* dList1;
 	Doubly_List<int> dList2;
 	dList2.head = zvezda;
-	dList2.Show();
+	dList2.Show();*/
 	//dList2.Reverse();
 	/*Node<int>* clone = dList.Clone();
 	Doubly_List<int> dList2;
@@ -63,3 +84,5 @@ int main() {
 	std::cout<<queue.FElement();*/
 	return 0;
 }
+
+

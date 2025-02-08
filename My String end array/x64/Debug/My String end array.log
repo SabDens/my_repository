@@ -1,5 +1,8 @@
-﻿  doubly_list.h
+﻿  College.cpp
+  Contact.cpp
   main.cpp
-C:\Users\denbo\source\repos\my repository\My String end array\main.cpp(13,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\denbo\source\repos\My_Repository_\My String end array\main.cpp(14,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  My_String.cpp
+  Student.cpp
   Создание кода...
-  My String end array.vcxproj -> C:\Users\denbo\source\repos\my repository\x64\Debug\My String end array.exe
+  My String end array.vcxproj -> C:\Users\denbo\source\repos\My_Repository_\x64\Debug\My String end array.exe

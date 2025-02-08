@@ -26,9 +26,11 @@ public:
 	Array();
 	Array(size_t size);
 	Array(int* data, size_t size);
+	Array(Array& other);
 	~Array();
 	///создаёт массив заполненный случайными элементами
 	void RandArray(size_t size);
+	void RandArray();
 	///глубокое копирование
 	void Copy(const Array& arr);
 	///заполняет часть массива числом
@@ -64,7 +66,7 @@ public:
 	///Стискає ємність до мінімально можливого розміру
 	void Shrink();
 	//операторы
-	Array& operator=(const Array& other);
+	Array& operator=(Array& other);
 	Array& operator=(const T* other);
 	Array operator+(const Array& other);
 	Array& operator+=(const Array& other);
@@ -85,8 +87,9 @@ public:
 
 template <typename T>
 void Array<T>::NewArr(size_t size) {
+	Clear();
 	_size = size;
-	delete[] _data;
+	_capacity = _size + 10;
 	_data = new T[_capacity];
 }
 
@@ -95,7 +98,7 @@ void Array<T>::Clear() {
 	delete[] _data;
 	_data = nullptr;
 	_size = 0;
-
+	_capacity = 0;
 }
 
 template <typename T>
@@ -177,6 +180,11 @@ Array<T>::Array(int* data, size_t size)
 	}
 
 }
+template <typename T>
+Array<T>::Array(Array& other)  
+	: _data(other._data), _size(other._size), _capacity(other._capacity) {
+	other.Clear();
+}
 
 template <typename T>
 Array<T>::~Array() {
@@ -189,6 +197,13 @@ void Array<T>::RandArray(size_t size) {
 	_size = size;
 
 	NewArr(_size);
+	for (size_t i = 0; i < _size; i++)
+	{
+		_data[i] = rand() % 100;
+	}
+}
+template <typename T>
+void Array<T>::RandArray() {
 	for (size_t i = 0; i < _size; i++)
 	{
 		_data[i] = rand() % 100;
@@ -410,9 +425,13 @@ void Array<T>::Shrink() {
 }
 
 template <typename T>
-Array<T>& Array<T>::operator=(const Array& other)
+Array<T>& Array<T>::operator=(Array& other)
 {
-	Copy(other);
+	_data = other._data;
+	_capacity = other._capacity;
+	_size = other._size;
+	other._data = nullptr;
+	other.Clear();
 	return *this;
 }
 

@@ -128,6 +128,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Array.h" />
+    <ClInclude Include="College.h" />
+    <ClInclude Include="Contact.h" />
     <ClInclude Include="Fifo.h" />
     <ClInclude Include="Lifo.h" />
     <ClInclude Include="List.h" />
@@ -135,12 +137,16 @@
     <ClInclude Include="NewArray.h" />
     <ClInclude Include="Queue.h" />
     <ClInclude Include="Stack.h" />
+    <ClInclude Include="Student.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="College.cpp" />
+    <ClCompile Include="Contact.cpp" />
     <ClCompile Include="doubly_list.h" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="My_String.cpp" />
     <ClCompile Include="Stack.cpp" />
+    <ClCompile Include="Student.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
