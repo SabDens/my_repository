@@ -215,11 +215,6 @@ int main()
 {
 	srand(time(0));
 
-	
-	/*cout << "exercise: ";
-	int exercise;
-	std::cin >> exercise;*/
-
 	Arr<int> arr_1, arr_2;
 	std::cout << "M: ";
 	implement(arr_1);
@@ -241,19 +236,5 @@ int main()
 	delete[] arr_2.arr;
 	delete[] arr_c.arr;
 
-	/*switch (exercise)
-	{
 
-	case 1:
-		Aufgabe_eins(arr, arr1, size, ptr, count_size);
-		print(ptr, count_size);
-		break;
-	case 2:
-		Aufgabe_zwei(arr, arr1, size, ptr, count_size);
-		print(ptr, count_size);
-		break;
-	default:
-		std::cout << "Error";
-		break;
-	}*/
 }
