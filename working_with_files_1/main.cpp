@@ -77,9 +77,6 @@ public:
     }
 
     void task_6() {
-        if (!inputFile || !outputFile)  
-            return;
-
         int symbols = 0;
         int rows = 0;
         int vowel_l = 0;
