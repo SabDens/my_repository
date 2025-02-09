@@ -1,6 +1,7 @@
 #pragma once
-#include "GameWorld.h"
-#include "GameWordsBuitder.h"
+#include "GameWord.h"
+#include "GameWordsBuilder.h"
+#include "IGameView.h"
 #include <memory>
 
 using std::unique_ptr;
@@ -8,34 +9,42 @@ using std::unique_ptr;
 class Game
 {
 private:
-	unique_ptr<GameWorld> current_word;
+	GameWordsBuilder wordsBuilder;
+	unique_ptr<GameWord> current_word;
 	int mistakes;
-	GameWordsBuitder wordsBuilder;
+	unique_ptr<IGameView> view;
 public:
-	Game(const shared_ptr<WorldsManager>& manager) :wordsBuilder(manager) {
+	Game(const shared_ptr<WordsManager>& manager,
+		unique_ptr<IGameView>& view)
+		: wordsBuilder(manager),
+		view(std::move(view))
+	{
 		mistakes = 6;
 	}
-	void Start() {
-		while (!current_word->IsGuessed() && mistakes < 6)
+
+	void Start()
+	{
+		current_word = std::make_unique<GameWord>(wordsBuilder.GetRandomWord());
+		view->DisplayWord(current_word->GetExternalWord());
+		view->InitialMistakes(mistakes);
+
+		do
 		{
-			current_word = std::make_unique<GameWorld>(wordsBuilder.GetRandomWord());
-			char letter;
-			std::cout << "Enter: ";
-			std::cin >> letter;
-			if (current_word->InputLetter(letter))
+			while (!current_word->IsGuessed() && mistakes < 6)
 			{
-				std::cout << "Guessed!\n";
+				char letter = view->GetInputLetter();
+				if (current_word->InputLetter(letter))
+					view->DisplayWord(current_word->GetExternalWord());
+				else
+					view->DisplayMistakes(--mistakes);
 			}
+			if (mistakes < 6)
+				view->WordGuessed();
 			else {
-				std::cout << "Ungessed";
-				mistakes++;
+				view->GameOver();
+				// TODO: ????????? ?????????? ?? ??????? ?????
 			}
-		}
+			current_word = std::make_unique<GameWord>(wordsBuilder.GetRandomWord());
+		} while (!view->IsGameExit());
 	}
-
-	void End() {
-
-	}
-
-
 };

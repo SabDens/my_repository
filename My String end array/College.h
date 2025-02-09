@@ -9,6 +9,9 @@ private:
 	size_t _size;
 	My_String name;
 public:
+	College();
+	College(const College& other);
+	College(College&& other);
 	void Init(size_t size);
 	void Init_Auto(size_t size);
 	void Init_arr(size_t size);
@@ -16,5 +19,6 @@ public:
 	void Show_fur_student();
 	~College();
 	void clear();
-	College& operator=( College& other);
+	College& operator=(const College& other);
+	College& operator=( College&& other);
 };

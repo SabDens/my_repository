@@ -1,5 +1,22 @@
 #include "Contact.h"
 #include "../My String end array/My_String.h"
+Contact::Contact() {
+	number = 380730007377;
+	city.Init("Odessa");
+	country.Init("Ukraine");
+}
+Contact::Contact(const Contact& other) 
+	:number(other.number)
+{
+	city = other.city;
+	country = other.country;
+}
+Contact::Contact(Contact&& other) 
+	:number(other.number)	{
+	city = std::move(other.city);
+	country = std::move(other.country);
+	other.number = 0;
+}
 void Contact::Init_Auto()
 {
 	number = 380730007377;
@@ -27,20 +44,26 @@ void Contact::Show() {
 }
 Contact::~Contact() {
 	number = 0;
-	city.~My_String();
-	country.~My_String();
+	
 }
 void Contact::clear() {
 	number = 0;
 	city.clear();
 	country.clear();
 }
-
-Contact& Contact::operator=(Contact& other) {
+Contact& Contact::operator=(const Contact& other) {
+	clear();
 	number = other.number;
 	city = other.city;
 	country = other.country;
+	return *this;
+}
+
+Contact& Contact::operator=(Contact&& other) {
+	clear();
+	number = other.number;
 	other.number = 0;
-	other.clear();
+	city = std::move(other.city);
+	country = std::move(other.country);
 	return *this;
 }

@@ -30,9 +30,23 @@ My_String::My_String(const char* etwas)
 	_string[_length] = '\0';
 }
 
+My_String::My_String(const My_String& other)
+	: _length(other._length)
+{
+	_string = new char[_length + 1];
+	for (size_t i = 0; i < _length; i++)
+	{
+		_string[i] = other._string[i];
+	}
+	_string[_length] = '\0';
+}
 
-My_String::My_String(My_String& other) : _length(other._length), _string(other._string) {
-	other.clear();
+My_String::My_String(My_String&& other){
+
+	_length = other._length;
+	_string = other._string;
+	other._string = nullptr;
+	other._length = 0;
 }
 My_String::~My_String()
 {
@@ -62,12 +76,27 @@ void My_String::Init(const char* new_string) {
 	_length = new_length;
 }
 
-My_String& My_String::operator=(My_String& other)
+
+My_String& My_String::operator=(const My_String& other)
 {
+	clear();
+	_length = other._length;
+	_string = new char[_length + 1];
+
+	for (size_t i = 0; i < _length; i++)
+	{
+		_string[i] = other._string[i];
+	}
+	_string[_length] = '\0';
+	return *this;
+}
+My_String& My_String::operator=(My_String&& other)
+{
+	clear();
 	_string = other._string;
 	_length = other._length;
 	other._string = nullptr;
-	other.clear();
+	other._length = 0;
 	return *this;
 }
 My_String& My_String::operator=(const char* other) {

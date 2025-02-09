@@ -10,11 +10,14 @@ private:
 	size_t contact_size;
 	My_String college_information;
 public:
-	Student(Student& other);
+	Student();
+	Student(const Student& other);
+	Student(Student&& other);
 	void Init();
 	void Init_Auto(size_t size);
 	void Show();
 	~Student();
 	void clear();
-	Student& operator=(Student& other);
+	Student& operator=(const Student& other);
+	Student& operator=(Student&& other);
 };

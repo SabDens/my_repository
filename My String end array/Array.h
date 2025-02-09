@@ -26,7 +26,8 @@ public:
 	Array();
 	Array(size_t size);
 	Array(int* data, size_t size);
-	Array(Array& other);
+	Array(Array&& other);
+	Array(const Array& other);
 	~Array();
 	///создаёт массив заполненный случайными элементами
 	void RandArray(size_t size);
@@ -66,7 +67,8 @@ public:
 	///Стискає ємність до мінімально можливого розміру
 	void Shrink();
 	//операторы
-	Array& operator=(Array& other);
+	Array& operator=(Array&& other);
+	Array& operator=(const Array& other);
 	Array& operator=(const T* other);
 	Array operator+(const Array& other);
 	Array& operator+=(const Array& other);
@@ -181,11 +183,27 @@ Array<T>::Array(int* data, size_t size)
 
 }
 template <typename T>
-Array<T>::Array(Array& other)  
-	: _data(other._data), _size(other._size), _capacity(other._capacity) {
-	other.Clear();
-}
+Array<T>::Array(Array&& other) 
+{
+	_size = other._size;
+	_capacity = other._capacity;
+	_data = other._data;  
 
+	other._data = nullptr;
+	other._size = 0;
+	other._capacity = 0;
+
+}
+template <typename T>
+Array<T>::Array(const Array& other)
+	:_size(other._size), _capacity(other._capacity)
+{
+	_data = new T[_capacity];
+	for (size_t i = 0; i < _size; i++)
+	{
+		_data[i] = other._data[i];
+	}
+}
 template <typename T>
 Array<T>::~Array() {
 	delete[] _data;
@@ -425,16 +443,32 @@ void Array<T>::Shrink() {
 }
 
 template <typename T>
-Array<T>& Array<T>::operator=(Array& other)
+Array<T>& Array<T>::operator=(Array&& other)
 {
-	_data = other._data;
-	_capacity = other._capacity;
+	Clear();
 	_size = other._size;
+	_capacity = other._capacity;
+	_data = other._data;
 	other._data = nullptr;
-	other.Clear();
+	other._size = 0;
+	other._capacity = 0;
 	return *this;
 }
 
+template <typename T>
+Array<T>& Array<T>::operator=(const Array& other)
+{
+	Clear();
+	_size = other._size;
+	_capacity = other._capacity;
+
+	_data = new T[_capacity];
+	for (size_t i = 0; i < _size; i++)
+	{
+		_data[i] = other._data[i];
+	}
+	return *this;
+}
 template <typename T>
 Array<T>& Array<T>::operator=(const T* other) {
 	void Clear();

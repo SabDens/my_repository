@@ -1,14 +1,37 @@
 #include "Student.h"
-Student::Student(Student& other) 
+Student::Student() {
+	st_name.Init("Denys Boiko");
+	birthday.Init("15.04.2007");
+	college_information.Init("It step");
+	contact_size = 5;
+	contacts = new College[contact_size];
+	contacts->Init_Auto(contact_size);
+
+}
+Student::Student(const Student& other) 
 {
 	st_name = other.st_name;
 	birthday = other.birthday;
 	contact_size = other.contact_size;
-	contacts = other.contacts;
+	for (size_t i = 0; i < contact_size; i++)
+	{
+		contacts[i] = other.contacts[i];
+	}
 	college_information = other.college_information;
-
-	other.clear();
 }
+
+Student::Student(Student&& other)
+{
+	st_name = std::move(other.st_name);
+	birthday = std::move(other.birthday);
+	college_information = std::move(other.college_information);
+	contact_size = other.contact_size;
+	contacts = other.contacts;
+	other.contacts = nullptr;
+	other.contact_size = 0;
+
+}
+
 void Student::Init() {
 	std::cout << "Student name: ";
 	st_name.Init();
@@ -38,30 +61,41 @@ void Student::Show() {
 
 }
 Student::~Student() {
-	st_name.~My_String();
-	birthday.~My_String();
-	delete[] contacts;
-	contact_size = 0;
-	college_information.~My_String();
+	clear();
 }
 void Student::clear() {
 	st_name.clear();
 	birthday.clear();
-	for (size_t i = 0; i < contact_size; i++)
-	{
-		contacts[i].clear();
-	}
-	contact_size = 0;
 	college_information.clear();
+	delete[] contacts;
+	contacts = nullptr;
+	contact_size = 0;
+	
 	
 }
-Student& Student::operator=(Student& other) {
+Student& Student::operator=(const Student& other) {
+	clear();
 	st_name = other.st_name;
 	birthday = other.birthday;
 	college_information = other.college_information;
 	contact_size = other.contact_size;
+
+	contacts = new College[contact_size];
+	for (size_t i = 0; i < contact_size; i++) {
+		contacts[i] = other.contacts[i];
+	}
+	return *this;
+
+}
+
+Student& Student::operator=(Student&& other) {
+	st_name = std::move(other.st_name);
+	birthday = std::move(other.birthday);
+	college_information = std::move(other.college_information);
+	contact_size = other.contact_size;
 	contacts = other.contacts;
-	other.clear();
+	other.contacts = nullptr;
+	other.contact_size = 0;
 	return *this;
 
 }
