@@ -19,6 +19,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dynamic_memory_c", "Dynamic
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gallows", "Gallows\Gallows.vcxproj", "{4C7E70AD-D1FC-46CB-8D78-4030BE9122C3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "working_with_files_1", "working_with_files_1\working_with_files_1.vcxproj", "{05E618C9-DA1C-4C3B-9D61-12E9186F6113}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -91,6 +93,14 @@ Global
 		{4C7E70AD-D1FC-46CB-8D78-4030BE9122C3}.Release|x64.Build.0 = Release|x64
 		{4C7E70AD-D1FC-46CB-8D78-4030BE9122C3}.Release|x86.ActiveCfg = Release|Win32
 		{4C7E70AD-D1FC-46CB-8D78-4030BE9122C3}.Release|x86.Build.0 = Release|Win32
+		{05E618C9-DA1C-4C3B-9D61-12E9186F6113}.Debug|x64.ActiveCfg = Debug|x64
+		{05E618C9-DA1C-4C3B-9D61-12E9186F6113}.Debug|x64.Build.0 = Debug|x64
+		{05E618C9-DA1C-4C3B-9D61-12E9186F6113}.Debug|x86.ActiveCfg = Debug|Win32
+		{05E618C9-DA1C-4C3B-9D61-12E9186F6113}.Debug|x86.Build.0 = Debug|Win32
+		{05E618C9-DA1C-4C3B-9D61-12E9186F6113}.Release|x64.ActiveCfg = Release|x64
+		{05E618C9-DA1C-4C3B-9D61-12E9186F6113}.Release|x64.Build.0 = Release|x64
+		{05E618C9-DA1C-4C3B-9D61-12E9186F6113}.Release|x86.ActiveCfg = Release|Win32
+		{05E618C9-DA1C-4C3B-9D61-12E9186F6113}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

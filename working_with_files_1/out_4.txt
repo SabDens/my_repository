@@ -1,0 +1,5 @@
+symbols: 2037
+rows: 6
+vowel letters: 708
+consonant letters: 956
+numbers: 0
