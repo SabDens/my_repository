@@ -6,9 +6,12 @@
 class HTML_V {
 private:
     std::unique_ptr<std::string> fileName;
+    std::ifstream file;
 public:
     HTML_V(const std::string& filename) {
         fileName = std::make_unique<std::string>(filename);
+        std::ifstream file(*fileName);
+
     }
 
     bool Validate() {
@@ -16,7 +19,7 @@ public:
         int open = 0;
         int close = 0;
 
-        std::ifstream file(*fileName);
+
         if (!file) {
             std::cout << "Error\n";
             return false;
