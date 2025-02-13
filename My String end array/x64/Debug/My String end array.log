@@ -1,7 +1,3 @@
-﻿  College.cpp
-  Contact.cpp
-  Student.cpp
-  main.cpp
+﻿  main.cpp
 C:\Users\denbo\source\repos\My_Repository_\My String end array\main.cpp(14,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-  Создание кода...
   My String end array.vcxproj -> C:\Users\denbo\source\repos\My_Repository_\x64\Debug\My String end array.exe

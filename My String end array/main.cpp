@@ -15,27 +15,35 @@ int main() {
 	//1 è 2
 
 
-
-	My_String string("Denys");
+	try
+	{
+		//Array<int> obj_arr(0);
+		Array<int> obj_arr(10);
+		obj_arr.RandArray(10);
+		//obj_arr.RandArray(0);
+		obj_arr.Errase(20);
+		//obj_arr.Reserve(0);
+		obj_arr.Print();
+		
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << ex.what();
+	}
+	/*My_String string("Denys");
 	My_String string1;
-	string.Print();
+	string.Print();	
 
 	string1 = std::move(string);
-	string1.Print();
+	string1.Print();*/
 	//string.Print();
 
-	Array<int> obj_arr(10);
-	obj_arr.RandArray();
-	obj_arr.Print();
-	Array<int>obj_arr2;
-
-	obj_arr2 = std::move(obj_arr);
-	obj_arr2.Print();
+	
 
 
 	//3 è 4
 
-	Student student1;
+	/*Student student1;
 	student1.Init_Auto(5);
 	student1.Show();
 
@@ -43,7 +51,7 @@ int main() {
 	Student student2 = std::move(student1);
 	student2.Show();
 	Student student3(std::move(student1));
-	student3.Show();
+	student3.Show();*/
 	/*Doubly_List<int> dList;
 	dList.AddToHead(73);
 	dList.AddToTail(14);
