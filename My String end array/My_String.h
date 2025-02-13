@@ -12,7 +12,7 @@ public:
 	void clear();
 
 	My_String();
-	My_String(size_t length);
+	My_String(int length);
 	My_String(const char* etwas);
 	My_String(const My_String& other);
 	My_String(My_String&& other);

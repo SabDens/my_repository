@@ -17,7 +17,7 @@ My_String::My_String() {
 	_string[0] = '\0';
 }
 
-My_String::My_String(size_t length)
+My_String::My_String(int length)
 {
 	if (length < 1) {
 		throw  std::runtime_error("My_String(size_t length):length < 1");

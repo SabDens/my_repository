@@ -5,9 +5,9 @@
 #include "My_String.h"
 //#include "list.h"
 //#include "Stack.h"
-//#include "doubly_list.h"
+#include "doubly_list.h"
 //#include "Queue.h"
-#include "Student.h"
+//#include "Student.h"
 
 int main() { 
 
@@ -17,22 +17,24 @@ int main() {
 
 	try
 	{
-		//Array<int> obj_arr(0);
-		Array<int> obj_arr(10);
-		obj_arr.RandArray(10);
-		//obj_arr.RandArray(0);
-		obj_arr.Errase(20);
-		//obj_arr.Reserve(0);
-		obj_arr.Print();
-		
+		////Array<int> obj_arr(0);
+		//Array<int> obj_arr(10);
+		//obj_arr.RandArray(10);
+		////obj_arr.RandArray(0);
+		//obj_arr.Errase(20);
+		////obj_arr.Reserve(0);
+		//obj_arr.Print();
+
+		My_String string(0);
+		string.Print();
 	}
 	catch (const std::exception& ex)
 	{
 		std::cout << ex.what();
 	}
-	/*My_String string("Denys");
-	My_String string1;
-	string.Print();	
+	
+	/*My_String string1;
+
 
 	string1 = std::move(string);
 	string1.Print();*/
