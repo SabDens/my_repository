@@ -15,13 +15,13 @@ public:
 	My_String(int length);
 	My_String(const char* etwas);
 	My_String(const My_String& other);
-	My_String(My_String&& other);
+	My_String(My_String&& other)noexcept;
 	~My_String();
 	void Print() const;
 	void Init();
 	void Init(const char* new_string);
 	My_String& operator=(const My_String& other);
-	My_String& operator=(My_String&& other);
+	My_String& operator=(My_String&& other)noexcept;
 	My_String& operator=(const char* other);
 	My_String operator+(const My_String& other);
 	My_String& operator+=(const My_String& other);

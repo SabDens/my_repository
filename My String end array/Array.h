@@ -27,7 +27,7 @@ public:
 	Array();
 	Array(size_t size);
 	Array(int* data, size_t size);
-	Array(Array&& other);
+	Array(Array&& other)noexcept;
 	Array(const Array& other);
 	~Array();
 	///создаёт массив заполненный случайными элементами
@@ -68,7 +68,7 @@ public:
 	///Стискає ємність до мінімально можливого розміру
 	void Shrink();
 	//операторы
-	Array& operator=(Array&& other);
+	Array& operator=(Array&& other)noexcept;
 	Array& operator=(const Array& other);
 	Array& operator=(const T* other);
 	Array operator+(const Array& other);
@@ -223,7 +223,7 @@ Array<T>::Array(int* data, size_t size)
 
 }
 template <typename T>
-Array<T>::Array(Array&& other) 
+Array<T>::Array(Array&& other) noexcept
 {
 	if (other._size < 1 || other._data)
 	{
@@ -508,7 +508,7 @@ void Array<T>::Shrink() {
 }
 
 template <typename T>
-Array<T>& Array<T>::operator=(Array&& other)
+Array<T>& Array<T>::operator=(Array&& other)noexcept
 {
 	if (other._size < 1 || !other._data)
 		throw  std::runtime_error("operator=(Array&& other): other._size < 1 || other.!_data");

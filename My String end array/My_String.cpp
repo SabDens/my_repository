@@ -54,7 +54,7 @@ My_String::My_String(const My_String& other)
 	_string[_length] = '\0';
 }
 
-My_String::My_String(My_String&& other){
+My_String::My_String(My_String&& other)noexcept {
 	if (!other._string || other._length < 1) {
 		throw  std::runtime_error("My_String(const My_String&& other):!other._string || other._length<1");
 	}
@@ -114,7 +114,7 @@ My_String& My_String::operator=(const My_String& other)
 	_string[_length] = '\0';
 	return *this;
 }
-My_String& My_String::operator=(My_String&& other)
+My_String& My_String::operator=(My_String&& other)noexcept
 {
 	if (!other._string || other._length < 1) {
 		throw  std::runtime_error("operator=(const My_String&& other):!other._string || other._length<1");
