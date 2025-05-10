@@ -2,6 +2,10 @@
 #include <iostream>
 
 void My_String::clear() {
+	if (!_string)
+	{
+		return;
+	}
 	delete[] _string;
 	_string = nullptr;
 	_length = 0;
@@ -13,14 +17,20 @@ My_String::My_String() {
 	_string[0] = '\0';
 }
 
-My_String::My_String(size_t length)
-	:_length(length)
+My_String::My_String(int length)
 {
+	if (length < 1) {
+		throw  std::runtime_error("My_String(size_t length):length < 1");
+	}
+	_length=length;
 	_string = new char[_length];
 }
 
 My_String::My_String(const char* etwas)
 {
+	if (!etwas) {
+		throw  std::runtime_error("My_String(const char* etwas):!etwas");
+	}
 	_length = strlen(etwas);
 	_string = new char[_length + 1];
 	for (size_t i = 0; i < _length; i++)
@@ -31,8 +41,11 @@ My_String::My_String(const char* etwas)
 }
 
 My_String::My_String(const My_String& other)
-	: _length(other._length)
 {
+	if (!other._string || other._length<1) {
+		throw  std::runtime_error("My_String(const My_String& other):!other._string || other._length<1");
+	}
+	_length=other._length;
 	_string = new char[_length + 1];
 	for (size_t i = 0; i < _length; i++)
 	{
@@ -41,6 +54,15 @@ My_String::My_String(const My_String& other)
 	_string[_length] = '\0';
 }
 
+My_String::My_String(My_String&& other)noexcept {
+	if (!other._string || other._length < 1) {
+		throw  std::runtime_error("My_String(const My_String&& other):!other._string || other._length<1");
+	}
+	_length = other._length;
+	_string = other._string;
+	other._string = nullptr;
+	other._length = 0;
+}
 My_String::~My_String()
 {
 	delete[] _string;
@@ -48,7 +70,11 @@ My_String::~My_String()
 
 void My_String::Print() const
 {
-	std::cout << _string << " " << this << "\n";
+	if (!_string || _length < 1) {
+		throw  std::runtime_error(" My_String::Print():!_string || _length<1");
+	}
+	//std::cout << _string << " " << this << "\n";
+	std::cout << _string << "\n";
 }
 
 void My_String::Init() {
@@ -56,7 +82,10 @@ void My_String::Init() {
 	_length = strlen(_string);
 }
 
-void My_String::Init( char* new_string) {
+void My_String::Init(const char* new_string) {
+	if (!new_string) {
+		throw  std::runtime_error("Init(const char* new_string): !new_string");
+	}
 	size_t  new_length = strlen(new_string);
 	clear();
 	_string = new char[new_length + 1];
@@ -68,14 +97,16 @@ void My_String::Init( char* new_string) {
 	_length = new_length;
 }
 
-My_String& My_String::operator=( My_String& other)
+
+My_String& My_String::operator=(const My_String& other)
 {
-	/**this = other;
-	other._string = nullptr;
-	other._length = 0;*/
+	if (!other._string || other._length < 1) {
+		throw  std::runtime_error("operator=(const My_String& other):!other._string || other._length<1");
+	}
 	clear();
 	_length = other._length;
 	_string = new char[_length + 1];
+
 	for (size_t i = 0; i < _length; i++)
 	{
 		_string[i] = other._string[i];
@@ -83,7 +114,22 @@ My_String& My_String::operator=( My_String& other)
 	_string[_length] = '\0';
 	return *this;
 }
+My_String& My_String::operator=(My_String&& other)noexcept
+{
+	if (!other._string || other._length < 1) {
+		throw  std::runtime_error("operator=(const My_String&& other):!other._string || other._length<1");
+	}
+	clear();
+	_string = other._string;
+	_length = other._length;
+	other._string = nullptr;
+	other._length = 0;
+	return *this;
+}
 My_String& My_String::operator=(const char* other) {
+	if (!other) {
+		throw  std::runtime_error("My_String::operator=(const char* other):!other");
+	}
 	clear();
 	_length = strlen(other);
 	_string = new char[_length + 1];
@@ -96,6 +142,9 @@ My_String& My_String::operator=(const char* other) {
 }
 My_String My_String::operator+(const My_String& other)
 {
+	if (!other._string || other._length < 1) {
+		throw  std::runtime_error("operator+(const My_String& other):!other._string || other._length<1");
+	}
 	char* temp_string = new char[_length + other._length + 1];
 
 	for (size_t i = 0; i < _length; i++) {
@@ -106,11 +155,15 @@ My_String My_String::operator+(const My_String& other)
 		temp_string[_length + i] = other._string[i];
 	}
 	temp_string[_length + other._length] = '\0';
-	return My_String(temp_string);
+	My_String result(temp_string);
+	return result;
 }
 
 My_String& My_String::operator+=(const My_String& other)
 {
+	if (!other._string || other._length < 1) {
+		throw  std::runtime_error("operator+=(const My_String& other):!other._string || other._length<1");
+	}
 	char* temp_string = new char[_length + other._length + 1];
 
 	for (size_t i = 0; i < _length; i++) {
@@ -129,14 +182,23 @@ My_String& My_String::operator+=(const My_String& other)
 
 char My_String::operator[](size_t index)
 {
+	if (index<0|| index>_length) {
+		throw  std::runtime_error("operator[](size_t index): index<0|| index>_length");
+	}
 	return _string[index];
 }
 std::ostream& operator<<(std::ostream& os, const My_String& etwas) {
+	if (!etwas._string || etwas._length<1) {
+		throw  std::runtime_error("operator<<: !etwas._string || etwas._length<1");
+	}
 	os << etwas._string;
 	return os;
 }
 bool My_String::operator==(const My_String& other)
 {
+	if (!other._string || other._length < 1) {
+		throw  std::runtime_error("operator==(const My_String& other): !other._string || other._length < 1");
+	}
 	if (_length != other._length)
 	{
 		return false;
@@ -152,6 +214,9 @@ bool My_String::operator==(const My_String& other)
 }
 bool My_String::operator!=(const My_String& other)
 {
+	if (!other._string || other._length < 1) {
+		throw  std::runtime_error("operator!=(const My_String& other): !other._string || other._length < 1");
+	}
 	if (_length != other._length)
 	{
 		return true;
@@ -167,6 +232,9 @@ bool My_String::operator!=(const My_String& other)
 }
 bool My_String::operator>(const My_String& other)
 {
+	if (!other._string || other._length < 1) {
+		throw  std::runtime_error("operator>(const My_String& other): !other._string || other._length < 1");
+	}
 	if (_length > other._length)
 	{
 		return true;
@@ -176,6 +244,9 @@ bool My_String::operator>(const My_String& other)
 
 bool My_String::operator<(const My_String& other)
 {
+	if (!other._string || other._length < 1) {
+		throw  std::runtime_error("operator<(const My_String& other): !other._string || other._length < 1");
+	}
 	if (_length > other._length)
 	{
 		return false;

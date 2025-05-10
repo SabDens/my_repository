@@ -1,138 +1,66 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "Unit.h"
-// Unit
+#include <iostream>
 
-Unit::Unit(const char* name_, int hp)
-	:HP(hp), Weapon(Common, name_), speed(10), name(name_)
+Unit::Unit(const char* name, int hp, Weapon* weapon, const Position& pos)
+	: hp(hp > 0 ? hp : 100), weapon(weapon), position(pos), range(1)
 {
-
+	int len = std::strlen(name) + 1;
+	this->name = new char[len];
+	std::strcpy(this->name, name);
 }
-Unit::Unit(int hp)
-	:HP(hp), Weapon(Common, ""), speed(10), name("Denys")
+
+Unit::~Unit()
 {
+	delete[] name;
 }
 
-Unit::Unit(const char* name_)
-	:HP(1000), Weapon(Common, name_), speed(10), name(name_)
+void Unit::Damaged(int value)
 {
-
-}
-Unit::~Unit() {
-
-}
-void Unit::TakeDamage(int value) {
-	if (IslnDefense)
+	if (hp - value <= 0)
 	{
-		HP -= value/2;
+		hp = 0;
+		std::cout << this->name << " was killed!" << std::endl; // !!!
+	}
+	else // hp - value > 0
+	{
+		hp -= value;
+		std::cout << this->name << " wounded on: " << value << " Health: " << hp << std::endl; // !!!
+	}
+}
+
+int Unit::GetHP() const
+{
+	return hp;
+}
+
+const char* Unit::GetName() const
+{
+	return name;
+}
+
+void Unit::SetPosition(Position& position)
+{
+	this->position = position;
+}
+
+const Position& Unit::GetPosition() const
+{
+	return position;
+}
+
+void Unit::Attack(Unit& enemy) // !!!
+{
+	if (&enemy == this || enemy.GetHP() == 0 || hp == 0)
+	{
 		return;
 	}
-	
-	HP -= value;
-}
-void Unit::Atack(Unit& enemy) {
-	std::cout << "Unit " << name << " Attack" << enemy.name << std::endl;
-	
-	enemy.HP -= GetDamege();
-}
-void Unit::Defense() {
-	if (IslnDefense)
-	{
-		IslnDefense = false;
-		return;
-	}
-	IslnDefense = true;
+	int damage = weapon->GetDamage();
+	std::cout << this->name << " Attack " << enemy.name << std::endl;
+	enemy.Damaged(damage);
 }
 
-void Unit::Print() const {
-	std::cout << "Unit:\n" << "Name " << name << "\n" << "HP " << HP << "\n" << "speed " << speed << "\n" << "Weapon: \n";
-	std::cout << "Name " << name << "\n" << "Grade " <<grade << "\n" << "min damage " << damage / 2;
-}
-
-//Swordman
-
-
-
-Swordman::~Swordman()
+void Unit::print() const
 {
-}
-void Swordman::Atack(Unit& enemy)
-{
-	Unit::Atack(enemy);
-}
-void Swordman::Defense()
-{
-	Unit::Defense();
-}
-void Swordman::TakeDamage(int value) {
-	if (IslnDefense)
-	{
-		HP -= value / 2;
-		return;
-	}
-
-	HP -= value;
-}
-
-// Archer
-
-Archer::~Archer()
-{
-}
-void Archer::Atack(Unit& enemy)
-{
-	if (arrows>3)
-	{
-		Unit::Atack(enemy);
-		Unit::Atack(enemy);
-		Unit::Atack(enemy);
-	}
-	else
-	{
-		arrows += 5;
-	}
-}
-void Archer::Defense()
-{
-	Unit::Defense();
-}
-void Archer::TakeDamage(int value) {
-	if (IslnDefense)
-	{
-		HP -= value / 2;
-		return;
-	}
-
-	HP -= value;
-}
-
-//Mage
-
-
-
-Mage::~Mage()
-{
-}
-void Mage::Atack(Unit& enemy)
-{
-	if (mana > 10)
-	{
-		Unit::Atack(enemy);
-		Unit::Atack(enemy);
-	}
-	else
-	{
-		mana += 15;
-	}
-}
-void Mage::Defense()
-{
-	Unit::Defense();
-}
-void Mage::TakeDamage(int value) {
-	if (IslnDefense)
-	{
-		HP -= value / 2;
-		return;
-	}
-
-	HP -= value;
+	std::cout << "Name:" << name << std::endl;
 }

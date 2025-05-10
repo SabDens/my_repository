@@ -1,4 +1,5 @@
 #include <iostream>
+//https://en.cppreference.com/w/cpp/language/throw
 
 #pragma once
 template <typename T>
@@ -26,9 +27,12 @@ public:
 	Array();
 	Array(size_t size);
 	Array(int* data, size_t size);
+	Array(Array&& other)noexcept;
+	Array(const Array& other);
 	~Array();
 	///создаёт массив заполненный случайными элементами
 	void RandArray(size_t size);
+	void RandArray();
 	///глубокое копирование
 	void Copy(const Array& arr);
 	///заполняет часть массива числом
@@ -64,6 +68,7 @@ public:
 	///Стискає ємність до мінімально можливого розміру
 	void Shrink();
 	//операторы
+	Array& operator=(Array&& other)noexcept;
 	Array& operator=(const Array& other);
 	Array& operator=(const T* other);
 	Array operator+(const Array& other);
@@ -85,22 +90,40 @@ public:
 
 template <typename T>
 void Array<T>::NewArr(size_t size) {
+	if (size < 1)
+	{
+		throw  std::runtime_error("NewArr(size_t size): size < 1");
+	}
+	Clear();
 	_size = size;
-	delete[] _data;
+	_capacity = _size + 10;
 	_data = new T[_capacity];
 }
 
 template <typename T>
 void Array<T>::Clear() {
+	if (!_data)
+	{
+		return;
+	}
 	delete[] _data;
 	_data = nullptr;
 	_size = 0;
-
+	_capacity = 0;
 }
 
 template <typename T>
 void Array<T>::NewArrCopy()
 {
+	if (_size < 1)
+	{
+		throw  std::runtime_error("NewArrCopy(size_t size): size < 1");
+	}
+	else if (!_data)
+	{
+		throw  std::runtime_error("NewArrCopy(size_t size): _data == nullptr");
+	}
+
 	T* temp_data = new T[_size];
 	for (size_t i = 0; i < _size; i++)
 	{
@@ -112,11 +135,23 @@ void Array<T>::NewArrCopy()
 	{
 		_data[i] = temp_data[i];
 	}
+
+	delete[] temp_data;
 }
 
 template <typename T>
 void Array<T>::NewArrCopy(size_t size)
 {
+	if (size<1 )
+	{
+		throw  std::runtime_error("NewArrCopy(size_t size): size < 1");
+	}
+	else if (!_data)
+	{
+		throw  std::runtime_error("NewArrCopy(size_t size): _data == nullptr");
+	}
+
+
 	T* temp_data = new T[_size];
 	for (size_t i = 0; i < _size; i++)
 	{
@@ -128,6 +163,8 @@ void Array<T>::NewArrCopy(size_t size)
 	{
 		_data[i] = temp_data[i];
 	}
+	_size = size;
+	delete[] temp_data;
 }
 
 template <typename T>
@@ -147,7 +184,6 @@ template <typename T>
 void Array<T>::Examination() {
 	if (_size >= _capacity)
 	{
-
 		NewArrCopy();
 	}
 }
@@ -161,6 +197,10 @@ Array<T>::Array()
 
 template <typename T>
 Array<T>::Array(size_t size) {
+	if (size < 1)
+	{
+		throw  std::runtime_error("Array(size_t size): size < 1");
+	}
 	_size = size;
 	_capacity = size + 10;
 	_data = new T[_capacity];
@@ -168,24 +208,61 @@ Array<T>::Array(size_t size) {
 
 template <typename T>
 Array<T>::Array(int* data, size_t size)
-	:_size(size)
 {
-	_data = new T[_size];
+	if (size < 1 || !data)
+	{
+		throw  std::runtime_error("Array(int* data, size_t size): size < 1 || !data");
+	}
+	_size = size;
+	_capacity = size + 10;
+	_data = new T[_capacity];
 	for (size_t i = 0; i < _size; i++)
 	{
 		_data[i] = data[i];
 	}
 
 }
+template <typename T>
+Array<T>::Array(Array&& other) noexcept
+{
+	if (other._size < 1 || other._data)
+	{
+		throw  std::runtime_error("Array(Array&& other): other._size < 1 || other._data");
+	}
+	_size = other._size;
+	_capacity = other._capacity;
+	_data = other._data;  
 
+	other._data = nullptr;
+	other._size = 0;
+	other._capacity = 0;
+
+}
+template <typename T>
+Array<T>::Array(const Array& other)
+	:_size(other._size), _capacity(other._capacity)
+{
+	if (other._size < 1 || other._data)
+	{
+		throw  std::runtime_error("Array(const Array& other): other._size < 1 || other._data");
+	}
+	_data = new T[_capacity];
+	for (size_t i = 0; i < _size; i++)
+	{
+		_data[i] = other._data[i];
+	}
+}
 template <typename T>
 Array<T>::~Array() {
 	delete[] _data;
 	_size = 0;
+	_capacity = 0;
 }
 
 template <typename T>
 void Array<T>::RandArray(size_t size) {
+	if (size < 1)
+		throw  std::runtime_error("RandArray(size_t size): size < 1");
 	_size = size;
 
 	NewArr(_size);
@@ -194,9 +271,24 @@ void Array<T>::RandArray(size_t size) {
 		_data[i] = rand() % 100;
 	}
 }
+template <typename T>
+void Array<T>::RandArray() {
+	if (_size < 1)
+	{
+		throw  std::runtime_error("RandArray(): size < 1");
+	}
+	for (size_t i = 0; i < _size; i++)
+	{
+		_data[i] = rand() % 100;
+	}
+}
 
 template <typename T>
 void Array<T>::Copy(const Array& other) {
+	if (!other._data || other._size<1)
+	{
+		throw  std::runtime_error("Copy(const Array& other): !other._data || other._size<1");
+	}
 	_size = other._size;
 	NewArr(_size);
 	for (size_t i = 0; i < _size; i++)
@@ -208,6 +300,10 @@ void Array<T>::Copy(const Array& other) {
 template <typename T>
 void Array<T>::ElementX(size_t min, size_t max, T elX)
 {
+	if ((min<1 || min >_size)|| (max < 1 || max > _size))
+	{
+		throw  std::runtime_error("ElementX(size_t min, size_t max, T elX): (min < 1 || min > _size) || (max < 1 || max > _size)");
+	}
 	if (min > max)
 	{
 		size_t qwe = min;
@@ -226,6 +322,9 @@ void Array<T>::ElementX(size_t min, size_t max, T elX)
 
 template <typename T>
 void Array<T>::Print() const {
+	if (!_data || _size < 1)
+		throw  std::runtime_error("Print() const: !_data || _size < 1");
+
 	for (size_t i = 0; i < _size; i++)
 	{
 		std::cout << _data[i] << " ";
@@ -240,6 +339,8 @@ size_t Array<T>::Size() {
 
 template <typename T>
 void Array<T>::Size(size_t size) {
+	if (size < 1)
+		throw  std::runtime_error("Size(size_t size): size < 1");
 	if (size > _size)
 	{
 		NewArrCopy(size);
@@ -254,11 +355,15 @@ size_t Array<T>::Capacity() {
 
 template <typename T>
 T Array<T>::ArrIndex(size_t index) {
+	if (index<0 || index>_size || !_data)
+		throw  std::runtime_error("ArrIndex(size_t index): index<0 || index>_size || !_data");
 	return _data[index];
 }
 
 template <typename T>
 void Array<T>::Element(size_t index, T value) {
+	if (index<0 || index>_size || !_data)
+		throw  std::runtime_error("Element(size_t index, T value): index<0 || index>_size || !_data");
 	_data[index] = value;
 }
 
@@ -273,27 +378,15 @@ bool Array<T>::CheckNullptr() {
 
 template <typename T>
 void Array<T>::Rand_to_index(size_t index) {
-	if ((0 > index) || (index < _size))
-	{
-		_data[index] = rand() % 100;
-	}
-	else
-	{
-		std::cout << "Rand_to_index: index not correct";
-	}
+	if (index<0 || index>_size || !_data)
+		throw  std::runtime_error("Rand_to_index(size_t index): index<0 || index>_size || !_data");
+	_data[index] = rand() % 100;
 }
 template <typename T>
 void Array<T>::ArrSizePlus(size_t size) {
-	if (size < 1)
-	{
-		std::cout << "ArrSizePlus: mix size ist 1";
-		return;
-	}
-	if (size == _size)
-	{
-		std::cout << "ArrSizePlus: size == _size";
-		return;
-	}
+	if (size < 1 || size == _size || !_data)
+		throw  std::runtime_error("ArrSizePlus(size_t size): size < 1 || size == _size || !_data");
+
 	T* temp_arr = new T[size];
 	if (size > _size)
 	{
@@ -321,6 +414,8 @@ void Array<T>::ArrSizePlus(size_t size) {
 template <typename T>
 void boobleSort(T* arr, const size_t size)
 {
+	if (!arr || size < 1)
+		throw  std::runtime_error("boobleSort(T* arr, const size_t size): !arr || size < 1");
 	T temp;
 	bool isSwaped;
 	int end = size - 1;
@@ -370,6 +465,8 @@ void Array<T>::Append(T value) {
 
 template <typename T>
 void Array<T>::Errase(size_t index) {
+	if ((index < 0) || (index > _size) || (!_data))
+		throw  std::runtime_error("Errase(size_t index): index<0 || index >_size || !_data");
 	for (size_t i = index; i < _size -1; i++)
 	{
 		_data[i] = _data[i + 1];
@@ -378,17 +475,16 @@ void Array<T>::Errase(size_t index) {
 }
 template<typename T>
 void Array<T>::Reserve(size_t size) {
-	if (size < _size)
-	{
-		return;
-	}
+	if (size < _size) 
+		throw  std::runtime_error("Reserve(size_t size):size < _size");
+
 	T* temp_data = new T[_size];
 	for (size_t i = 0; i < _size; i++)
 	{
 		temp_data[i] = _data[i];
 	}
 	_capacity = size + 10;
-	NewArr(size);
+	NewArr(_capacity);
 	for (size_t i = 0; i < _size; i++)
 	{
 		_data[i] = temp_data[i];
@@ -397,12 +493,14 @@ void Array<T>::Reserve(size_t size) {
 }
 template<typename T>
 void Array<T>::Shrink() {
+	if (_size < 1 || !_data)
+		throw  std::runtime_error("Shrink(): _size < 1 || !_data");
 	T* temp_data = new T[_size];
 	for (size_t i = 0; i < _size; i++)
 	{
 		temp_data[i] = _data[i];
 	}
-	NewArr(_size);
+	NewArr(_size-10);
 	for (size_t i = 0; i < _size; i++)
 	{
 		_data[i] = temp_data[i];
@@ -410,14 +508,41 @@ void Array<T>::Shrink() {
 }
 
 template <typename T>
+Array<T>& Array<T>::operator=(Array&& other)noexcept
+{
+	if (other._size < 1 || !other._data)
+		throw  std::runtime_error("operator=(Array&& other): other._size < 1 || other.!_data");
+	Clear();
+	_size = other._size;
+	_capacity = other._capacity;
+	_data = other._data;
+	other._data = nullptr;
+	other._size = 0;
+	other._capacity = 0;
+	return *this;
+}
+
+template <typename T>
 Array<T>& Array<T>::operator=(const Array& other)
 {
-	Copy(other);
+	if (other._size < 1 || !other._data)
+		throw  std::runtime_error("operator=(const Array& other): other._size < 1 || other.!_data");
+	Clear();
+	_size = other._size;
+	_capacity = other._capacity;
+
+	_data = new T[_capacity];
+	for (size_t i = 0; i < _size; i++)
+	{
+		_data[i] = other._data[i];
+	}
 	return *this;
 }
 
 template <typename T>
 Array<T>& Array<T>::operator=(const T* other) {
+	if (!other)
+		throw  std::runtime_error("operator=(const T* other): !other");
 	void Clear();
 	_size = sizeof(other) / sizeof(other[0]);
 	NewArr(_size);
@@ -430,6 +555,8 @@ Array<T>& Array<T>::operator=(const T* other) {
 
 template <typename T>
 Array<T> Array<T>::operator+(const Array& other) {
+	if (other._size < 1 || !other._data)
+		throw  std::runtime_error("operator+(const Array& other): other._size < 1 || other.!_data");
 	size_t temp_size = _size;
 	size_t temp_size_min = other._size;
 
@@ -464,6 +591,8 @@ Array<T> Array<T>::operator+(const Array& other) {
 
 template <typename T>
 Array<T>& Array<T>::operator+=(const Array& other) {
+	if (other._size < 1 || !other._data)
+		throw  std::runtime_error("operator+=(const Array& other): other._size < 1 || other.!_data");
 	size_t temp_size = _size;
 	size_t temp_size_min = other._size;
 
@@ -500,11 +629,14 @@ Array<T>& Array<T>::operator+=(const Array& other) {
 template <typename T>
 T Array<T>::operator[](size_t index)
 {
+	if (index<1 || index> _size && !_data)
+		throw  std::runtime_error("operator[](size_t index): index<1 && index> _size || !_data");
 	return _data[index];
 }
 
 template <typename U>
 std::ostream& operator<<(std::ostream& os, const Array<U>& etwas) {
+
 	for (size_t i = 0; i < etwas._size; i++) {
 		os << etwas._data[i] << " ";
 	}
@@ -516,6 +648,8 @@ std::ostream& operator<<(std::ostream& os, const Array<U>& etwas) {
 template <typename T>
 bool Array<T>::operator==(const Array& other)
 {
+	if (other._size < 1 || !other._data)
+		throw  std::runtime_error("operator==(const Array& other): other._size < 1 || other.!_data");
 	if (_size != other._size)
 	{
 		return false;
@@ -533,6 +667,8 @@ bool Array<T>::operator==(const Array& other)
 template <typename T>
 bool Array<T>::operator!=(const Array& other)
 {
+	if (other._size < 1 || !other._data)
+		throw  std::runtime_error("operator!=(const Array& other): other._size < 1 || other.!_data");
 	if (_size != other._size)
 	{
 		return true;
@@ -550,6 +686,8 @@ bool Array<T>::operator!=(const Array& other)
 template <typename T>
 bool Array<T>::operator>(const Array& other)
 {
+	if (other._size < 1 || !other._data)
+		throw  std::runtime_error("operator>(const Array& other): other._size < 1 || other.!_data");
 	if (_size > other._size)
 	{
 		return true;
@@ -560,6 +698,8 @@ bool Array<T>::operator>(const Array& other)
 template <typename T>
 bool Array<T>::operator<(const Array& other)
 {
+	if (other._size < 1 || !other._data)
+		throw  std::runtime_error("operator<(const Array& other): other._size < 1 || other.!_data");
 	if (_size > other._size)
 	{
 		return false;
@@ -569,6 +709,8 @@ bool Array<T>::operator<(const Array& other)
 
 template <typename T>
 Array<T> Array<T>::operator*(const Array& other) {
+	if (other._size < 1 || !other._data)
+		throw  std::runtime_error("operator*(const Array& other): other._size < 1 || other.!_data");
 	size_t temp_max_size = _size;
 	if (_size < other._size)
 	{
@@ -597,6 +739,8 @@ Array<T> Array<T>::operator*(const Array& other) {
 
 template <typename T>
 void Array<T>::Fifo_Push(T value) {
+	if (_size < 1 || !_data)
+		throw  std::runtime_error("Fifo_Push(T value): _size < 1 || !_data");
 	Examination_incr();
 	for (size_t i = _size-1; i > 0; i--)
 	{
@@ -607,6 +751,8 @@ void Array<T>::Fifo_Push(T value) {
 
 template <typename T>
 void Array<T>::Fifo_Pop() {
+	if (_size < 2 || !_data)
+		throw  std::runtime_error("Fifo_Pop(): _size < 2 || !_data");
 	for (size_t i = 0; i < _size-1; i++)
 	{
 		_data[i] = _data[i + 1];
@@ -616,5 +762,7 @@ void Array<T>::Fifo_Pop() {
 
 template <typename T>
 void Array<T>::Lifo_Pop() {
+	if (_size == 0 || !_data)
+		throw  std::runtime_error("Lifo_Pop(): _size == 0 || !_data");
 	_size--;
 }

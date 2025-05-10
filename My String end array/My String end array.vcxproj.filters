@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Student">
+      <UniqueIdentifier>{dd699f40-7968-4dfa-ba9d-6156f8b002c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array.h">
@@ -39,6 +42,15 @@
     <ClInclude Include="NewArray.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="College.h">
+      <Filter>Student</Filter>
+    </ClInclude>
+    <ClInclude Include="Contact.h">
+      <Filter>Student</Filter>
+    </ClInclude>
+    <ClInclude Include="Student.h">
+      <Filter>Student</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -52,6 +64,15 @@
     </ClCompile>
     <ClCompile Include="doubly_list.h">
       <Filter>Файлы заголовков</Filter>
+    </ClCompile>
+    <ClCompile Include="College.cpp">
+      <Filter>Student</Filter>
+    </ClCompile>
+    <ClCompile Include="Contact.cpp">
+      <Filter>Student</Filter>
+    </ClCompile>
+    <ClCompile Include="Student.cpp">
+      <Filter>Student</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

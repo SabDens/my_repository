@@ -32,14 +32,9 @@ public:
 	Doubly_List() : head{ nullptr }, back{ nullptr }
 	{}
 
-	/*void add(const T& value)
-	{
-		Node<T>* nodePtr = new Node<T>(value);
-		nodePtr->next = head;
-		head = nodePtr;
-	}*/
 
 	void AddToHead(const T& value) {
+
 		Node<T>* nodePtr = new Node<T>(value);
 		nodePtr->next = head;
 		nodePtr->prev = nullptr;
@@ -51,9 +46,10 @@ public:
 			head->prev = nodePtr;
 		}
 		head = nodePtr;
-		//back = nodePtr;
 	}
 	void AddToTail(const T& value) {
+		
+
 		if (head == nullptr)
 		{
 			AddToHead(value);
@@ -69,7 +65,7 @@ public:
 
 	void DeleteFromHead() {
 		if (head == nullptr) {
-			return;
+			throw  std::runtime_error("DeleteFromHead():head == nullptr");
 		}
 		Node<T>* nodePtr = head;
 		head = head->next;
@@ -86,7 +82,10 @@ public:
 
 	void DeleteFromTail() {
 		if (back == nullptr) {
-			return;
+			throw  std::runtime_error("DeleteFromTail():back == nullptr");
+		}
+		else if (head == nullptr) {
+			throw  std::runtime_error("DeleteFromHead():head == nullptr");
 		}
 		Node<T>* nodePtr = back;
 		back = back->prev;
@@ -98,107 +97,21 @@ public:
 		}
 		delete nodePtr;
 	}
-	/*void remove()
-	{
-		if (head != nullptr)
-		{
-			Node<T>* nodePtr = head;
-			head = head->next;
-			delete nodePtr;
-		}
-	}*/
+
 	void DeleteAll() {
+		if (head == nullptr) {
+			throw  std::runtime_error("DeleteAll():head == nullptr");
+		}
 		while (head != nullptr) {
 			DeleteFromHead();
 		}
 	}
 
 
-	/*Node<T>* find(const T& value) const
-	{
-		for (Node<T>* nodePtr = head;
-			nodePtr != nullptr;
-			nodePtr = nodePtr->next)
-		{
-			if (nodePtr->value == value)
-			{
-				return nodePtr;
-			}
-		}
-		return nullptr;
-	}
-
-	Node<T>* findPrev(const T& value) const
-	{
-		if (head == nullptr)
-		{
-			return nullptr;
-		}
-		for (Node<T>* nodePtr = head->next, *prevPtr = head;
-			nodePtr != nullptr;
-			nodePtr = nodePtr->next, prevPtr = prevPtr->next)
-		{
-			if (nodePtr->value == value)
-			{
-				return prevPtr;
-			}
-		}
-		return nullptr;
-	}
-
-	Node<T>* addAfter(const T& value, Node<T>* afterPtr)
-	{
-		if (afterPtr == nullptr)
-		{
-			return nullptr;
-		}
-		Node<T>* nodePtr = new Node<T>(value);
-		nodePtr->next = afterPtr->next;
-		afterPtr->next = nodePtr;
-		return afterPtr->next;
-	}
-
-	Node<T>* removeAfter(Node<T>* afterPtr)
-	{
-		if (afterPtr != nullptr && afterPtr->next != nullptr)
-		{
-			Node<T>* nodePtr = afterPtr->next;
-			afterPtr->next = afterPtr->next->next;
-			delete nodePtr;
-		}
-		return afterPtr;
-	}
-
-	void clear()
-	{
-		while (head != nullptr)
-		{
-			remove();
-		}
-	}
-
-	void doForEach(void(*func)(Node<T>* nodePtr))
-	{
-		for (Node<T>* nodePtr = head; nodePtr != nullptr; nodePtr = nodePtr->next)
-		{
-			func(nodePtr);
-		}
-	}
-
-	static void printNode(Node<T>* nodePtr)
-	{
-		nodePtr->print();
-		std::cout << " > ";
-	}
-
-	void print()
-	{
-		std::cout << " > ";
-		doForEach(printNode);
-		std::cout << std::endl;
-	}*/
-
 	void Show() const {
+		if (head == nullptr) {
+			throw  std::runtime_error("Show():head == nullptr");
+		}
 		Node<T>* nodePtr = head;
 		while (nodePtr != nullptr) {
 			std::cout << nodePtr->value << " ";
@@ -208,6 +121,9 @@ public:
 		std::cout << "\n";
 	}
 	void Reverse() {
+		if (head == nullptr) {
+			throw  std::runtime_error("Show():head == nullptr");
+		}
 		Node<T>* temp_h = head;
 		Node<T>* temp_n = nullptr;
 
@@ -224,12 +140,15 @@ public:
 		}
 	}
 	void InsertPos(T value, int pos) {
+		if (head == nullptr) {
+			throw  std::runtime_error("InsertPos(T value, int pos):head == nullptr");
+		}
 		Node<T>* nodePtr = new Node<T>(value);
 		Node<T>* temp_h = head;
 
 		for (int i = 0; i < pos-1;i++) {
 			if (temp_h == nullptr) {
-				return; 
+				throw  std::runtime_error("InsertPos(T value, int pos):position non");
 
 			}
 			temp_h = temp_h->next;
@@ -245,11 +164,13 @@ public:
 		temp_h->next = nodePtr;
 	}
 	void DeletePos(int pos) {
-
+		if (head == nullptr) {
+			throw  std::runtime_error("DeletePos(int pos):head == nullptr");
+		}
 		Node<T>* temp_h = head;
 		for (int i = 0; i < pos-1; i++) {
 			if (temp_h == nullptr) {
-				return; 
+				throw  std::runtime_error("DeletePos(int pos):position non");
 			}
 			temp_h = temp_h->next;
 		}
@@ -260,6 +181,9 @@ public:
 	}
 
 	int Find(T value) const {
+		if (head == nullptr) {
+			throw  std::runtime_error("Find(T value):head == nullptr");
+		}
 		Node<T>* temp_h = head;
 		size_t position = 0;
 		while (temp_h != nullptr) {
@@ -272,10 +196,13 @@ public:
 			}
 			temp_h = temp_h->next;
 		}
-		std::cout << "NULL";
-		return -1;
+		throw  std::runtime_error("Find(T value):NULL");
+
 	}
 	int Replace(T value,T newValue) {
+		if (head == nullptr) {
+			throw  std::runtime_error("Replace(T value,T newValue):head == nullptr");
+		}
 		int count = 0;
 		Node<T>* temp_h = head;
 		while (temp_h != nullptr) {
@@ -289,11 +216,14 @@ public:
 		{
 			return count;
 		}
-		return  -1;
+		throw  std::runtime_error("Replace(T value,T newValue):NULL");
 	}
 
 
 	Node<T>* Clone() const {
+		if (head == nullptr) {
+			throw  std::runtime_error("Clone():head == nullptr");
+		}
 		Node<T>* newList = new Node<T>(head->value); 
 		Node<T>* temp_h = head->next; 
 		Node<T>* nodePtr = newList;
@@ -313,6 +243,9 @@ public:
 	}
 
 	Node<T>* operator+(const Doubly_List<T>& other) const {
+		if (head == nullptr) {
+			throw  std::runtime_error("operator+(const Doubly_List<T>& other):head == nullptr");
+		}
 		Node<T>* newList = this->Clone();
 
 		Node<T>* temp_h = newList;
@@ -337,10 +270,13 @@ public:
 
 
 
-
-
-	//я страдал 
 	Node<T>* operator*(const Doubly_List<T>& other) const {
+		if (other.head == nullptr) {
+			throw  std::runtime_error("operator*(const Doubly_List<T>& other):other.head == nullptr");
+		}
+		else if (other.head == nullptr) {
+			throw  std::runtime_error("operator*(const Doubly_List<T>& other):head == nullptr");
+		}
 		Doubly_List<T> List;
 		List.head = *this + other;
 

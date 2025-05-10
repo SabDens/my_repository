@@ -1,96 +1,21 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "Weapon.h"
+#include <iostream>
 
-Weapon::Weapon(Grade grade_, const char* name_)
-	:damage(30), grade(grade_), name(name_)
+Weapon::Weapon(const char* name, int damage)
+	: damage(damage > 0 ? damage : 5)
 {
+	int len = std::strlen(name) + 1;
+	this->name = new char[len];
+	std::strcpy(this->name, name);
 }
-Weapon::Weapon(const char* name_)
-	:damage(30), grade(Common), name(name_)
+
+Weapon::~Weapon()
 {
-}
-Weapon::~Weapon() {
-
-}
-unsigned int Weapon::GetDamege() {
-	return damage * grade;
+	delete[] name;
 }
 
-
-void Weapon::UpGrade() {
-
-	switch (grade) {
-	case 1:
-		grade = Grade::Rare;
-		std::cout << "improvement to Rare";
-		damage += 5;
-		break;
-	case 2:
-		grade = Grade::Epic;
-		std::cout << "improvement to Epic";
-		damage += 15;
-		break;
-	case 3:
-		grade = Grade::Legendary;
-		std::cout << "improvement to Legendary";
-		damage += 25;
-		break;
-	case 4:
-		grade = Grade::Mythic;
-		std::cout << "improvement to Mythic";
-		damage += 35;
-		break;
-	default:
-		std::cout << "maximum rarity";
-		damage += 5;
-	}
-
-
-}
-Grade Weapon::GetGrade() {
-	return grade;
-}
-
-//Sword
-
-unsigned int Sword::GetDamage() {
-
-	return damage * grade + 10;
-}
-
-
-void Sword::UpGrade() {
-	Weapon::UpGrade();
-}
-
-
-//Stick
-
-unsigned int Stick::GetDamage() {
-	if (charges>2)
-	{
-		return damage * grade;
-	}
-	else
-	{
-		charges += 4;
-		return 0;
-	}
-
-}
-
-
-void Stick::UpGrade() {
-	Weapon::UpGrade();
-}
-
-//Bow
-
-unsigned int Bow::GetDamage() {
-
-	return damage / 2 * grade + 20;
-}
-
-
-void Bow::UpGrade() {
-	Weapon::UpGrade();
+int Weapon::GetDamage() const
+{
+	return damage;
 }

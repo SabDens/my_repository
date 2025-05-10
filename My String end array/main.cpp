@@ -1,17 +1,60 @@
 #include <iostream>
-//#include "Array.h"
+#include "Array.h"
 //#include "Fifo.h"
 //#include "Lifo.h"
-//#include "My_String.h"
+#include "My_String.h"
 //#include "list.h"
 //#include "Stack.h"
 #include "doubly_list.h"
-#include "Queue.h"
-
+//#include "Queue.h"
+//#include "Student.h"
 
 int main() { 
+
 	srand(time(0));
-	Doubly_List<int> dList;
+	//1 è 2
+
+
+	try
+	{
+		////Array<int> obj_arr(0);
+		//Array<int> obj_arr(10);
+		//obj_arr.RandArray(10);
+		////obj_arr.RandArray(0);
+		//obj_arr.Errase(20);
+		////obj_arr.Reserve(0);
+		//obj_arr.Print();
+
+		My_String string(0);
+		string.Print();
+	}
+	catch (const std::exception& ex)
+	{
+		std::cout << ex.what();
+	}
+	
+	/*My_String string1;
+
+
+	string1 = std::move(string);
+	string1.Print();*/
+	//string.Print();
+
+	
+
+
+	//3 è 4
+
+	/*Student student1;
+	student1.Init_Auto(5);
+	student1.Show();
+
+
+	Student student2 = std::move(student1);
+	student2.Show();
+	Student student3(std::move(student1));
+	student3.Show();*/
+	/*Doubly_List<int> dList;
 	dList.AddToHead(73);
 	dList.AddToTail(14);
 	dList.AddToTail(17);
@@ -33,7 +76,7 @@ int main() {
 	Node<int>* zvezda = dList* dList1;
 	Doubly_List<int> dList2;
 	dList2.head = zvezda;
-	dList2.Show();
+	dList2.Show();*/
 	//dList2.Reverse();
 	/*Node<int>* clone = dList.Clone();
 	Doubly_List<int> dList2;
@@ -63,3 +106,5 @@ int main() {
 	std::cout<<queue.FElement();*/
 	return 0;
 }
+
+

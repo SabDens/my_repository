@@ -18,6 +18,31 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Archer.cpp" />
+    <ClCompile Include="Battle.cpp" />
+    <ClCompile Include="Bow.cpp" />
+    <ClCompile Include="mian.cpp" />
+    <ClCompile Include="Position.cpp" />
+    <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="Swordsman.cpp" />
+    <ClCompile Include="Team.cpp" />
+    <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="Weapon.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Archer.h" />
+    <ClInclude Include="Array.h" />
+    <ClInclude Include="Battle.h" />
+    <ClInclude Include="Bow.h" />
+    <ClInclude Include="IPrint.h" />
+    <ClInclude Include="Position.h" />
+    <ClInclude Include="Sword.h" />
+    <ClInclude Include="Swordsman.h" />
+    <ClInclude Include="Team.h" />
+    <ClInclude Include="Unit.h" />
+    <ClInclude Include="Weapon.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -126,17 +151,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\My String end array\My_String.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Unit.cpp" />
-    <ClCompile Include="Weapon.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\My String end array\My_String.h" />
-    <ClInclude Include="Unit.h" />
-    <ClInclude Include="Weapon.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
